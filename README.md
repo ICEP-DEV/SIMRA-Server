@@ -5,7 +5,7 @@
 
 # installation/ setup environment
 * mvc newtons
-
+* install : Microsoft.AspNetCore.Mvc.NewtonsoftJson
 
 # Enable Cors
 public void ConfigureServices(IServiceCollection services)
