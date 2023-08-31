@@ -26,7 +26,6 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `user`
 --
-
 CREATE TABLE `user` (
   `userId` int(11) NOT NULL,
   `mobileNo` varchar(11) NOT NULL,
@@ -39,7 +38,6 @@ CREATE TABLE `user` (
 --
 -- Dumping data for table `user`
 --
-
 INSERT INTO `user` (`userId`, `mobileNo`, `password`, `firstname`, `lastname`, `level`) VALUES
 (1, '0123456789', '123zxc', 'Gift', 'Mukwevho', 1);
 

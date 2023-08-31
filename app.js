@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-//app.use('/apiNotes', require('./api/notes'));
+app.use('/api', require('./routes/user')) // 
 
 app.use('/', (req, res) =>{
     res.send('Endpoint')
