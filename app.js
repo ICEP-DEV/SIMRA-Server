@@ -11,13 +11,18 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/api', require('./routes/user')) // 
+// Mount the user login route
+app.use('/api', require('./routes/user'))
+
+
+// Mount the user registration route
+app.use('/api', require('./routes/registration'));
 
 app.use('/', (req, res) =>{
-    res.send('Endpoint')
+    res.send('Endpoint Successfully')
 })
 
-
+// server listening to port 3000 inside .env file
 app.listen(process.env.PORT, () => {
     console.log('Server started at port ' + process.env.PORT)
 })
