@@ -2,7 +2,7 @@ const express = require('express');
 const connection = require("../config/config");
 const router = express.Router();
 
-router.post('/login', (req,res)=>{
+router.get('/login', (req,res)=>{
     var sql = `SELECT * FROM USER WHERE mobileNo =?`   //"0123456789"
     connection.query(sql, [req.body.mobileNo],(err, results)=>{
         if(err) console(err)

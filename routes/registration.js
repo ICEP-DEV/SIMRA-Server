@@ -5,22 +5,21 @@ const mysql = require('mysql');
 
 
 // Import the database connection configuration
-const dbConfig = require('../config/config');
-const connection = mysql.createConnection(dbConfig);
+const connection = require('../config/config');
 
 // POST /api/register - User registration route
 router.post('/register', (req, res) => {
   const { mobileNo, password, firstname, lastname, level } = req.body;
-
+  console.log(mobileNo, password, firstname, lastname, level)
   // Check if the mobile number is already registered
   const sql = `SELECT * FROM user WHERE mobileNo = ?`;
-  connection.query(sql, [mobileNo], (err, Results) => {
+  connection.query(sql, [mobileNo], (err, results) => {
     if (err) {
       console.error('Error during registration check:', err);
-      return res.json({ message: 'Server error' });
+      throw err
     }
 
-    if (Results.length > 0) {
+    if (results.length > 0) {
       return res.json({ message: 'Mobile number is already registered' });
     }
 
@@ -31,13 +30,14 @@ router.post('/register', (req, res) => {
         console.error('Error during registration:', insertErr);
         return res.json({ message: 'Server error' });
       }
-
-      res.json({ message: 'User registered successfully' });
+      else{
+        res.json({ message: 'User registered successfully' });
+      }
     });
-  });
+  }); 
 });
 
 module.exports = router;
 
-
+ 
 
