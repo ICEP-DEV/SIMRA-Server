@@ -247,32 +247,52 @@ INSERT INTO `watersource` (`id`, `type`, `waterAccessability`, `samplingId`) VAL
 (8, 'Household Tap Water', 'Easy', NULL);
 
 --
--- Table structure for table `watersource`
+-- Table structure for table `reference pathogen`
 --
 
 CREATE TABLE `referencepathogen` (
   `pathogenid` int(11) NOT NULL,
-  `pathogenName` varchar(255) DEFAULT NULL
+  `pathogenName` varchar(255) DEFAULT NULL,
+  `model` varchar(255) DEFAULT NULL
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `watersource`
+-- Dumping data for table `reference pathogen`
 --
-INSERT INTO `referencepathogen` (`pathogenid`, `pathogenName`) VALUES
-(1, ' Pathogenic E. col'),
-(2, 'Cryptosporidium'),
-(3, 'E. coli O157:H7'),
-(4, 'Campylobacter'),
-(5, 'Cryptosporidium'),
-(6, 'Salmonella spp'),
-(7, 'STEC'),
-(8, 'Salmonella'),
-(9, 'Shigella'),
-(10, 'V. cholera'),
-(11, 'Giardia'),
-(12, 'E. Histolytica'),
-(13, 'C. jejuni');
+INSERT INTO `referencepathogen` (`pathogenid`, `pathogenName`, `model`) VALUES
+(1, 'Cryptosporidium parvum', 'exponential'),
+(2, ' E. coli O157:H7', 'beta-poisson'),
+(3, 'Campylobacter jejuni', 'beta-poisson'),
+(4, 'Salmonella typhi', 'beta-poisson'),
+(5, 'S. Flexneri', 'beta-poisson'),
+(6, 'Vibrio cholera', 'beta-poisson'),
+(7, 'Giardia lambia', 'beta-poisson'),
+(8, 'Entamoeba col', 'beta-poisson');
+
+--
+-- Table structure for table `parameters`
+--
+
+CREATE TABLE `parameters` (
+  `parameterid` int(11) NOT NULL,
+  `parameter_num` varchar(255) DEFAULT NULL
+  `pathogenid` varchar(255) DEFAULT NULL
+  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `parameters`
+--
+INSERT INTO `parameters` (`parameterid`, `parameter_num`, `pathogenid`) VALUES
+(2, 'r= 0.059', 1),
+(4, ' a= 0.4 and b=54.9 ', 2),
+(6, 'a= 0.145 and b= 7.58 ', 3),
+(8, 'a = 0.21 and b =49.78', 4),
+(10, 'a = 0.256 and b = 1480', 5),
+(12, 'a = 0.169 and b = 2305', 6),
+(14, 'K = 0.0199', 7),
+(16, 'a = 1.01E-01 N50 = 3.41E+02', 8);
 
 --
 -- Indexes for dumped tables
