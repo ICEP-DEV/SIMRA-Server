@@ -339,6 +339,11 @@ ALTER TABLE `user`
 ALTER TABLE `watersource`
   ADD PRIMARY KEY (`id`),
   ADD KEY `samplingId` (`samplingId`);
+--
+-- Indexes for table `referencepathogen`
+--
+ALTER TABLE `referencepathogen`
+  ADD PRIMARY KEY (`pathogenid`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -391,6 +396,11 @@ ALTER TABLE `user`
 --
 ALTER TABLE `watersource`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+-- AUTO_INCREMENT for table `referencepathogen`
+--
+ALTER TABLE `referencepathogen`
+  MODIFY `pathogenid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Constraints for dumped tables
