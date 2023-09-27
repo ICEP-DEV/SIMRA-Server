@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2023 at 05:58 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Sep 27, 2023 at 11:44 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -96,9 +96,39 @@ CREATE TABLE `municipality` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
--- Dumping data for table `municipality`
-/*INSERT INTO `municipality` (`muni_id`, `muni_name`, `province_id`) VALUES 
-('1', 'eThekwini Metropolitan', '1');*/
+
+--
+-- Table structure for table `parameters`
+--
+
+CREATE TABLE `parameters` (
+  `parameterid` int(11) NOT NULL,
+  `param_a` float DEFAULT NULL,
+  `param_b` float DEFAULT NULL,
+  `param_r` float DEFAULT NULL,
+  `param_k` float DEFAULT NULL,
+  `param_N50` float DEFAULT NULL,
+  `pathogenid` int(11) NOT NULL
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `parameters`
+--
+
+INSERT INTO `parameters` (`parameterid`, `param_a`, `param_b`, `param_r`, `param_k`, `param_N50`, `pathogenid`) VALUES
+(1, NULL, NULL, 0.059, NULL, NULL, 1),
+(2, 0.4, 54.9, NULL, NULL, NULL, 2),
+(3, 0.145, 7.58, NULL, NULL, NULL, 3),
+(4, 0.21, 49.78, NULL, NULL, NULL, 4),
+(5, 0.256, 1480, NULL, NULL, NULL, 5),
+(6, 0.169, 2305, NULL, NULL, NULL, 6),
+(7, NULL, NULL, NULL, 0.0199, NULL, 7),
+(8, 1.01E-01, NULL, NULL, NULL, 3.41E+02, 8);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `province`
 --
 
@@ -107,18 +137,48 @@ CREATE TABLE `province` (
   `province_name` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
+--
 -- Dumping data for table `province`
+--
+
 INSERT INTO `province` (`province_id`, `province_name`) VALUES
-(1, 'Kwazulu-Natal'),
-(2, 'Gauteng'),
-(3, 'Free State'),
-(4, 'Limpopo'),
-(5, 'Mpumalanga'),
-(6, 'North west'),
-(7, 'Western cape'),
-(8, 'Estern cape'),
-(9, 'Northen cape');
+('1', 'Kwazulu-Natal'),
+('2', 'Gauteng'),
+('3', 'Free State'),
+('4', 'Limpopo'),
+('5', 'Mpumalanga'),
+('6', 'North west'),
+('7', 'Western cape'),
+('8', 'Estern cape'),
+('9', 'Northen cape');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `referencepathogen`
+--
+
+CREATE TABLE `referencepathogen` (
+  `pathogenid` int(11) NOT NULL,
+  `pathogenName` varchar(255) DEFAULT NULL,
+  `model` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `referencepathogen`
+--
+
+INSERT INTO `referencepathogen` (`pathogenid`, `pathogenName`, `model`) VALUES
+(1, 'Cryptosporidium parvum', 'exponential'),
+(2, ' E. coli O157:H7', 'beta-poisson'),
+(3, 'Campylobacter jejuni', 'beta-poisson'),
+(4, 'Salmonella typhi', 'beta-poisson'),
+(5, 'S. Flexneri', 'beta-poisson'),
+(6, 'Vibrio cholera', 'beta-poisson'),
+(7, 'Giardia lambia', 'beta-poisson'),
+(8, 'Entamoeba col', 'beta-poisson');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `samplingdata`
@@ -187,17 +247,17 @@ CREATE TABLE `sanitaryinpectionquestion` (
 --
 
 INSERT INTO `sanitaryinpectionquestion` (`id`, `pitLatrine`, `domesticAnimal`, `diaperDisposal`, `wasteWaterRelease`, `openDefaction`, `unprotectedWaterSource`, `agriculturalActivity`, `observerLaundryActivity`, `samplingId`, `risk_type`, `total_avarage`) VALUES
-(3, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', 75),
-(4, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', 75),
-(6, 0, 0, 0, 0, 0, 0, 0, 0, 9, 'low risk', 0),
-(7, 0, 0, 0, 0, 0, 0, 0, 0, 10, 'low risk', 0),
-(9, 1, 0, 1, 0, 1, 0, 1, 0, 12, 'medium risk', 50),
-(10, 1, 1, 1, 0, 0, 1, 1, 1, 13, 'high risk', 75),
-(12, 1, 0, 1, 0, 1, 0, 1, 0, 21, 'medium risk', 50),
-(13, 1, 0, 1, 1, 0, 0, 0, 1, 22, 'medium risk', 50),
-(14, 0, 0, 0, 0, 0, 0, 0, 0, 23, 'low risk', 0),
-(15, 0, 1, 0, 1, 1, 0, 0, 1, 24, 'medium risk', 50),
-(16, 1, 1, 1, 1, 1, 1, 1, 1, 25, 'very high risk', 100);
+(3, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', '75'),
+(4, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', '75'),
+(6, 0, 0, 0, 0, 0, 0, 0, 0, 9, 'low risk', '0'),
+(7, 0, 0, 0, 0, 0, 0, 0, 0, 10, 'low risk', '0'),
+(9, 1, 0, 1, 0, 1, 0, 1, 0, 12, 'medium risk', '50'),
+(10, 1, 1, 1, 0, 0, 1, 1, 1, 13, 'high risk', '75'),
+(12, 1, 0, 1, 0, 1, 0, 1, 0, 21, 'medium risk', '50'),
+(13, 1, 0, 1, 1, 0, 0, 0, 1, 22, 'medium risk', '50'),
+(14, 0, 0, 0, 0, 0, 0, 0, 0, 23, 'low risk', '0'),
+(15, 0, 1, 0, 1, 1, 0, 0, 1, 24, 'medium risk', '50'),
+(16, 1, 1, 1, 1, 1, 1, 1, 1, 25, 'very high risk', '100');
 
 -- --------------------------------------------------------
 
@@ -235,7 +295,7 @@ CREATE TABLE `watersource` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `watersource`
+-- Dumping data for table `watersource`git
 --
 
 INSERT INTO `watersource` (`id`, `type`, `waterAccessability`, `samplingId`) VALUES
@@ -245,54 +305,6 @@ INSERT INTO `watersource` (`id`, `type`, `waterAccessability`, `samplingId`) VAL
 (6, 'Household Tap Water', 'Easy', NULL),
 (7, 'Household Tap Water', 'Easy', NULL),
 (8, 'Household Tap Water', 'Easy', NULL);
-
---
--- Table structure for table `reference pathogen`
---
-
-CREATE TABLE `referencepathogen` (
-  `pathogenid` int(11) NOT NULL,
-  `pathogenName` varchar(255) DEFAULT NULL,
-  `model` varchar(255) DEFAULT NULL
-
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `reference pathogen`
---
-INSERT INTO `referencepathogen` (`pathogenid`, `pathogenName`, `model`) VALUES
-(1, 'Cryptosporidium parvum', 'exponential'),
-(2, ' E. coli O157:H7', 'beta-poisson'),
-(3, 'Campylobacter jejuni', 'beta-poisson'),
-(4, 'Salmonella typhi', 'beta-poisson'),
-(5, 'S. Flexneri', 'beta-poisson'),
-(6, 'Vibrio cholera', 'beta-poisson'),
-(7, 'Giardia lambia', 'beta-poisson'),
-(8, 'Entamoeba col', 'beta-poisson');
-
---
--- Table structure for table `parameters`
---
-
-CREATE TABLE `parameters` (
-  `parameterid` int(11) NOT NULL,
-  `parameter_num` varchar(255) DEFAULT NULL
-  `pathogenid` varchar(255) DEFAULT NULL
-  
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `parameters`
---
-INSERT INTO `parameters` (`parameterid`, `parameter_num`, `pathogenid`) VALUES
-(2, 'r= 0.059', 1),
-(4, ' a= 0.4 and b=54.9 ', 2),
-(6, 'a= 0.145 and b= 7.58 ', 3),
-(8, 'a = 0.21 and b =49.78', 4),
-(10, 'a = 0.256 and b = 1480', 5),
-(12, 'a = 0.169 and b = 2305', 6),
-(14, 'K = 0.0199', 7),
-(16, 'a = 1.01E-01 N50 = 3.41E+02', 8);
 
 --
 -- Indexes for dumped tables
@@ -333,6 +345,12 @@ ALTER TABLE `province`
   ADD PRIMARY KEY (`province_id`);
 
 --
+-- Indexes for table `referencepathogen`
+--
+ALTER TABLE `referencepathogen`
+  ADD PRIMARY KEY (`pathogenid`);
+
+--
 -- Indexes for table `samplingdata`
 --
 ALTER TABLE `samplingdata`
@@ -359,11 +377,6 @@ ALTER TABLE `user`
 ALTER TABLE `watersource`
   ADD PRIMARY KEY (`id`),
   ADD KEY `samplingId` (`samplingId`);
---
--- Indexes for table `referencepathogen`
---
-ALTER TABLE `referencepathogen`
-  ADD PRIMARY KEY (`pathogenid`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -394,6 +407,12 @@ ALTER TABLE `municipality`
   MODIFY `muni_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `referencepathogen`
+--
+ALTER TABLE `referencepathogen`
+  MODIFY `pathogenid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
 -- AUTO_INCREMENT for table `samplingdata`
 --
 ALTER TABLE `samplingdata`
@@ -416,11 +435,6 @@ ALTER TABLE `user`
 --
 ALTER TABLE `watersource`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
--- AUTO_INCREMENT for table `referencepathogen`
---
-ALTER TABLE `referencepathogen`
-  MODIFY `pathogenid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Constraints for dumped tables

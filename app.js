@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api', require('./routes/user')) // 
 app.use('/api', require('./routes/refPathogen'))
+app.use('/api', require('./routes/parameters'))
 
 app.use('/', (req, res) =>{
     res.send('Endpoint')

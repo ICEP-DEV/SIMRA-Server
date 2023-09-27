@@ -5,11 +5,11 @@ const router = express.Router();
   
   
  // Get municipalities within a specific province
-  router.get('/municipalities/:province_id', (req, res) => {
-    const province_Id = req.params.province_id;
-    console.log(req.params.province_id);
-    const query = 'SELECT * FROM municipality WHERE province_id = ?';
-    connection.query(query, province_Id, (err, rows) => {
+  router.get('/parameters/:pathogenid', (req, res) => {
+    const pathogen_Id = req.params.pathogenid;
+    console.log(req.params.pathogenid);
+    const query = 'SELECT * FROM parameters WHERE pathogenid= ?';
+    connection.query(query, pathogen_Id, (err, rows) => {
       if (err) {
         throw err;
       }
