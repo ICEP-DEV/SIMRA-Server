@@ -3,16 +3,16 @@ const connection = require("../config/config");
 const router = express.Router();
 
 // Get parameters for a specific pathogen
-router.post('/parameters', (req, res) => {
+router.post('/QRMAlevel3', (req, res) => {
   const pathogenName = req.body.pathogenName;
   const e = 2.718;
   let pathogenResult = 0;
-  let qslQuery = 0;
-  let indicatorId;
+  let countestimate = 0;
+  let mstdata_Id;
 
   // Define a function to fetch all data from FIBdata
   const callAveCount = (callback) => {
-    const sqlQuery = 'SELECT countAverage, indicatorid FROM FIBdata ORDER BY indicatorid DESC LIMIT 1'; // Modify the query to retrieve the latest entry by user_id
+    const sqlQuery = 'SELECT count_estimate, mstdata_id FROM mst_maker ORDER BY mstdata_id DESC LIMIT 1'; // Modify the query to retrieve the latest entry by user_id
     //const userId = req.user.id; // Replace 'user_id' with the actual user identifier
     connection.query(sqlQuery, (err, rows) => {
       if (err) {
@@ -21,16 +21,16 @@ router.post('/parameters', (req, res) => {
       }
 
       if (rows.length > 0) {
-        qslQuery = parseInt(rows[0].countAverage);
-        indicatorId = parseInt(rows[0].indicatorid);
+        countestimate  = parseInt(rows[0].count_estimate);
+        mstdata_Id = parseInt(rows[0].mstdata_id);
       }
 
-      callback(null, qslQuery, indicatorId);
+      callback(null, countestimate , mstdata_Id);
     });
   };
 
-  // Call the function to fetch indicatorId and countAverage
-  callAveCount((err, qslQuery, indicatorId) => {
+  // Call the function to fetch mstdata_Id and count_estimate
+  callAveCount((err, countestimate , mstdata_Id) => {
     if (err) {
       return res.status(500).json({ error: 'Failed to retrieve data from the database' });
     }
@@ -39,41 +39,41 @@ router.post('/parameters', (req, res) => {
     switch (pathogenName) {
       case "Cryptosporidium parvum":
         r = 0.059;
-        pathogenResult = 1 - Math.pow(e, -r * qslQuery);
+        pathogenResult = 1 - Math.pow(e, -r * countestimate );
         break;
       case "E. coli O157:H7":
         alpha = 0.4;
         beta = 54.9;
-        pathogenResult = 1 - Math.pow((1 + qslQuery / beta), -alpha);
+        pathogenResult = 1 - Math.pow((1 + countestimate  / beta), -alpha);
         break;
       case "Campylobacter jejuni":
         alpha = 0.145;
         beta = 7.58;
-        pathogenResult = 1 - Math.pow((1 + qslQuery / beta), -alpha);
+        pathogenResult = 1 - Math.pow((1 + countestimate  / beta), -alpha);
         break;
       case "Salmonella typhi":
         alpha = 0.21;
         beta = 49.78;
-        pathogenResult = 1 - Math.pow((1 + qslQuery / beta), -alpha);
+        pathogenResult = 1 - Math.pow((1 + countestimate  / beta), -alpha);
         break;
       case "S. Flexneri":
         alpha = 0.256;
         beta = 1480;
-        pathogenResult = 1 - Math.pow((1 + qslQuery / beta), -alpha);
+        pathogenResult = 1 - Math.pow((1 + countestimate  / beta), -alpha);
         break;
       case "Vibrio cholera":
         alpha = 0.169;
         beta = 2305;
-        pathogenResult = 1 - Math.pow((1 + qslQuery / beta), -alpha);
+        pathogenResult = 1 - Math.pow((1 + countestimate  / beta), -alpha);
         break;
       case "Giardia lamblia":
         k = 0.0199;
-        pathogenResult = 1 - Math.pow(e, -k * qslQuery);
+        pathogenResult = 1 - Math.pow(e, -k * countestimate );
         break;
       case "Entamoeba coli":
         alpha = 0.101;
         NFifty = 341;
-        pathogenResult = -((1 + qslQuery / NFifty) * Math.pow(2, 1) / 0.101);
+        pathogenResult = -((1 + countestimate  / NFifty) * Math.pow(2, 1) / 0.101);
         break;
       default:
         alpha = req.body.alpha;
@@ -89,7 +89,7 @@ router.post('/parameters', (req, res) => {
       k,
       NFifty,
       pathogenName,
-      indicatorId,
+      mstdata_Id,
       pathogenResult,
     ];
 
