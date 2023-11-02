@@ -15,7 +15,9 @@ app.use('/api', require('./routes/user')) //
 app.use('/api', require('./routes/refPathogen'))
 app.use('/api', require('./routes/parameters'))
 app.use('/api', require('./routes/FIBdata'))
+app.use('/api', require('./routes/mstEstimates'))
 app.use('/api', require('./routes/QRMAlevel3'))
+//app.use('/api', require('./routes/multipleExplosure'))
 
 
 
